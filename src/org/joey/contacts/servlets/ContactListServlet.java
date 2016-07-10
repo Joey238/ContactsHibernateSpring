@@ -27,14 +27,11 @@ public class ContactListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Contact> contacts;
-		try {
+			//delete try-catch block
 			contacts = contactRepository.findAll();
 			request.setAttribute("contacts", contacts);
 		
 			request.getRequestDispatcher("/jsp/contactList.jsp").forward(request, response);
-			}catch (SQLException e) {
-				throw new ServletException(e);
-	}
 	}
 
 }

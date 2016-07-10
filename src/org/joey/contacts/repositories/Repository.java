@@ -1,5 +1,7 @@
 package org.joey.contacts.repositories;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
@@ -23,5 +25,9 @@ public class Repository<E>{
 	
 	public void delete(E entity){
 		entityManager.remove(entity);
+	}
+	
+	public List<E> findAll(){
+		return entityManager.createQuery("from "+ entityClass.getSimpleName(),entityClass).getResultList();
 	}
 }

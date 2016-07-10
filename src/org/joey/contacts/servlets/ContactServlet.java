@@ -28,7 +28,7 @@ public class ContactServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String add=request.getParameter("add");
-		 try {
+		 	// delete try-catch
 			 if(add!=null){
 				 request.getRequestDispatcher("jsp/addContact.jsp").forward(request, response);
 			 }else{ 
@@ -46,25 +46,18 @@ public class ContactServlet extends HttpServlet {
 				  request.getRequestDispatcher("jsp/viewContact.jsp").forward(request, response);
 				 } 
 			 }
-		 	}catch (SQLException e) {
-				throw new ServletException(e);
-			}
-	}
-
-	private void populateModelFromContactId(HttpServletRequest request) throws SQLException {
-		
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
+		
 			//add a new contact
 			if(request.getParameter("add")!=null){
 				//create new contact and address from form parameter, and persist
 				Address address=new Address(request.getParameter("street"),request.getParameter("city"),request.getParameter("state"),request.getParameter("zip"));
-					addressRepository.create(address);
+					//chage create to save
+					addressRepository.save(address);
 					Contact contact=new Contact(request.getParameter("name"),12L);
-					contactRepository.create(contact);
+					contactRepository.save(contact);
 					
 					//redirect to contact view list page
 					response.sendRedirect("contacts");
@@ -82,8 +75,9 @@ public class ContactServlet extends HttpServlet {
 					 address.setZip(request.getParameter("zip"));
 					 address.setId(contact.getAddressId());
 					 
-					 addressRepository.update(address);
-					 contactRepository.update(contact);
+					 //change update to save
+					 addressRepository.save(address);
+					 contactRepository.save(contact);
 					 
 					 //redirect to contact view page
 					 response.sendRedirect("contact?id="+ contact.getId());
@@ -104,9 +98,6 @@ public class ContactServlet extends HttpServlet {
 				super.doPost(request, response);
 				
 			}
-		}catch (SQLException e) {
-			throw new ServletException(e);
-		}
 	}
 
 }
