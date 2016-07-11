@@ -16,9 +16,6 @@ public class Contact {
 	private long id;
 	@Column
 	private String name;
-	@Column
-	private String phoneNumber;
-	
 	@OneToOne
 	 //private long addressId; 
 	private Address address;
@@ -54,14 +51,6 @@ public class Contact {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 	
 	

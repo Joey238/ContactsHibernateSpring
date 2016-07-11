@@ -22,7 +22,7 @@ public class Repository<E>{
 	public E save(E entity){
 		entityManager.getTransaction().begin();
 		entity=entityManager.merge(entity);
-		entityManager.getTransaction().begin();
+		entityManager.getTransaction().commit();
 		return entity;
 	}
 	 
