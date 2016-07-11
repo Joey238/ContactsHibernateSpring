@@ -1,14 +1,29 @@
 package org.joey.contacts.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="address")
 public class Address {
+	@Id
+	@GeneratedValue
 	private long id;
-	private String street;
+	@Column
+	private String street;  
+	@Column
 	private String city;
+	@Column
 	private String state;
+	@Column
 	private String zip;
 	
 	
 	public Address(){}
+	
 	public Address(String street, String city, String state, String zip) {
 		super();
 		this.street = street;

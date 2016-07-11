@@ -1,16 +1,34 @@
 package org.joey.contacts.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity 
+//table name is class name
 public class Contact {
+	
+	@Id
+	@GeneratedValue
 	private long id;
+	@Column
 	private String name;
-	private long addressId;
+	@Column
+	private String phoneNumber;
+	
+	@OneToOne
+	 //private long addressId; 
+	private Address address;
 	
 	public Contact(){}
 	
-	public Contact(String name, Long addressId) {
+	public Contact(String name, Address address) {
 		super();
 		this.name = name;
-		this.addressId = addressId;
+		this.address=address;
 	}
 	
 	public Long getId() {
@@ -25,13 +43,26 @@ public class Contact {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Long getAddressId() {
-		return addressId;
+
+	public Address getAddress() {
+		return address;
 	}
-	public void setAddressId(Long addressId) {
-		this.addressId = addressId;
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
-	
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 	
 	
 }

@@ -24,7 +24,6 @@ public class ContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final AddressRepository addressRepository=new AddressRepository();
     private final ContactRepository contactRepository=new ContactRepository();   
-	private long adsid;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String add=request.getParameter("add");
@@ -35,7 +34,10 @@ public class ContactServlet extends HttpServlet {
 				 //get contact id from request parameter, and populate model with the contact and address objects. 
 				 long id=Long.parseLong(request.getParameter("id"));
 				 Contact contact=contactRepository.find(id);
-				 Address address=addressRepository.find(contact.getAddressId());		
+				 
+				 Address address=addressRepository.find(contact.getAddressId());
+				 System.out.println("do get: address id: ***********"+ contact.getAddressId()+" address id: "+ address.getId());
+
 				 request.setAttribute("contact", contact);
 				 request.setAttribute("address",address);				 
 			
@@ -55,12 +57,13 @@ public class ContactServlet extends HttpServlet {
 				//create new contact and address from form parameter, and persist
 				Address address=new Address(request.getParameter("street"),request.getParameter("city"),request.getParameter("state"),request.getParameter("zip"));
 					//chage create to save
-					addressRepository.save(address);
-					Contact contact=new Contact(request.getParameter("name"),12L);
-					contactRepository.save(contact);
+					address=(Address)addressRepository.save(address);
+					Contact contact=new Contact(request.getParameter("name"),address.getId());
+					contact=(Contact) contactRepository.save(contact);
+					System.out.println("contact id: "+ contact.getId());
 					
 					//redirect to contact view list page
-					response.sendRedirect("contacts");
+					response.sendRedirect("contact?id="+ contact.getId());
 					
 			}else if(request.getParameter("edit")!=null){
 				//look up existing contact and address, edit fields and persist
@@ -82,19 +85,20 @@ public class ContactServlet extends HttpServlet {
 					 //redirect to contact view page
 					 response.sendRedirect("contact?id="+ contact.getId());
 			}else if(request.getParameter("delete")!=null){
-				
+					
 					//look up existing contact and address, and delete
 					long id =Long.parseLong(request.getParameter("id"));
 					Contact contact=contactRepository.find(id);
 					Address address=addressRepository.find(contact.getAddressId());
-					contactRepository.delete(contact);	
+					
+					System.out.println("contact id*******: "+ contact.getId()+ " ****address id****:"+ address.getId());
+					
 					addressRepository.delete(address);
+					contactRepository.delete(contact);	
 					
 					//redirect to contact contact list view page
 					response.sendRedirect("contacts");
-			}
-			
-			else{
+			}else{
 				super.doPost(request, response);
 				
 			}

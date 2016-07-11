@@ -4,6 +4,7 @@
   <welcome-file-list>
     <welcome-file>contacts</welcome-file>
   </welcome-file-list>
+  
   <resource-ref>
     <description>MySQL Datasource</description>
     <res-ref-name>jdbc/contactsdb</res-ref-name>
