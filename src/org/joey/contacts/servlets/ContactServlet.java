@@ -35,11 +35,10 @@ public class ContactServlet extends HttpServlet {
 				 long id=Long.parseLong(request.getParameter("id"));
 				 Contact contact=contactRepository.find(id);
 				 
-				 Address address=contact.getAddress();
-				 System.out.println("do get: address id:******* "+ address.getId());
+				 //we do not need to getAddress at all!!
 
 				 request.setAttribute("contact", contact);
-				 request.setAttribute("address",address);				 
+				 		 
 			
 				 //dispatch either to the edit page or to the view page
 				 if(request.getParameter("edit")!=null){
