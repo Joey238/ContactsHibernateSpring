@@ -3,6 +3,7 @@ package org.joey.contacts.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -19,7 +20,7 @@ public class Contact {
 	private String name;
 
 	 //private long addressId;
-	@OneToOne(cascade=CascadeType.ALL)//
+	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	private Address address;
 	
 	public Contact(){}

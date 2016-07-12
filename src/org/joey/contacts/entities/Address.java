@@ -21,7 +21,7 @@ public class Address {
 	@Column
 	private String zip;
 	
-	
+	//why do need default constructor? 
 	public Address(){}
 	
 	public Address(String street, String city, String state, String zip) {
