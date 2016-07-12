@@ -27,7 +27,9 @@ public class Repository<E>{
 	}
 	 
 	public void delete(E entity){ 
+		entityManager.getTransaction().begin();
 		entityManager.remove(entity);
+		entityManager.getTransaction().commit();
 
 	}
 	

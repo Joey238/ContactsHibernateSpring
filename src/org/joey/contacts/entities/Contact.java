@@ -1,5 +1,6 @@
 package org.joey.contacts.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,8 +17,9 @@ public class Contact {
 	private long id;
 	@Column
 	private String name;
-	@OneToOne
-	 //private long addressId; 
+
+	 //private long addressId;
+	@OneToOne(cascade=CascadeType.ALL)//
 	private Address address;
 	
 	public Contact(){}

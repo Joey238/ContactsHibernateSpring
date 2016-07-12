@@ -3,6 +3,8 @@ package org.joey.contacts.servlets;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,10 +57,13 @@ public class ContactServlet extends HttpServlet {
 			if(request.getParameter("add")!=null){
 				//create new contact and address from form parameter, and persist
 				Address address=new Address(request.getParameter("street"),request.getParameter("city"),request.getParameter("state"),request.getParameter("zip"));
-					//chage create to save
-					address=addressRepository.save(address);
-					addressRepository.save(address);
-					Contact contact=new Contact(request.getParameter("name"), address);
+					
+				//change create to save	
+/*//	delete		address=addressRepository.save(address); add:
+				@OneToOne(cascade=CascadeType.ALL)//
+				private Address address;*/	
+				
+				Contact contact=new Contact(request.getParameter("name"), address);
 					contact=contactRepository.save(contact);
 					
 					System.out.println("contact id: "+ contact.getId());
@@ -88,15 +93,12 @@ public class ContactServlet extends HttpServlet {
 					 response.sendRedirect("contact?id="+ contact.getId());
 			}else if(request.getParameter("delete")!=null){
 					
-					//look up existing contact and address, and delete
+					//look up existing contact, and delete
 					long id =Long.parseLong(request.getParameter("id"));
 					Contact contact=contactRepository.find(id);
-					Address address=contact.getAddress();
-					
-					System.out.println("contact id*******: "+ contact.getId()+ " ****address id****:"+ address.getId());
-					
+					 					
 					contactRepository.delete(contact);	
-					addressRepository.delete(address);
+					//delete :  addressRepository.delete(address);
 					
 					//redirect to contact contact list view page
 					response.sendRedirect("contacts");
