@@ -10,7 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity 
-//table name is class name
 public class Contact {
 	
 	@Id
