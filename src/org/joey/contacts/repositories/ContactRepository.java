@@ -1,11 +1,11 @@
 package org.joey.contacts.repositories;
 
-
 import org.joey.contacts.entities.Contact;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+public class ContactRepository extends Repository<Contact> {
 
-public interface ContactRepository extends JpaRepository<Contact,Long>{
-	
+	public ContactRepository() {
+		super(Contact.class);
+	}
 	
 }

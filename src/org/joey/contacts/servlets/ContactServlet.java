@@ -1,48 +1,54 @@
-package org.joey.contacts.controllers;
+package org.joey.contacts.servlets;
 
+import java.io.IOException;
+import java.sql.SQLException;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.joey.contacts.entities.Address;
+import org.joey.contacts.entities.Contact;
+import org.joey.contacts.repositories.AddressRepository;
 import org.joey.contacts.repositories.ContactRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mysql.fabric.Response;
 
 /**
  * Servlet implementation class ContactServelet
  */
-@Controller
-public class ContactController {
-
-	@Autowired
-    private ContactRepository contactRepository;   
+@WebServlet("/contact")
+public class ContactServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private final AddressRepository addressRepository=new AddressRepository();
+    private final ContactRepository contactRepository=new ContactRepository();   
     
-	@RequestMapping(value="/contacts",method=RequestMethod.GET)
-	public String getContactList(Model model){
-		model.addAttribute(contactRepository.findAll());
-		return "contact/list";
-	}
-	
-	@RequestMapping(value="/contact",params="add", method=RequestMethod.GET)
-	public String getAddContact(){
-		return "contact/add";
-	}
-	
-	@RequestMapping(value="/contact",params="edit",method=RequestMethod.GET)
-	public String getEditContact(@RequestParam long id,Model model){
-		model.addAttribute("contact",contactRepository.findOne(id));
-		return "contact/edit";
-	}
-	
-	@RequestMapping(value="/contact",method=RequestMethod.GET)
-	public String getViewContact(@RequestParam long id, Model model){
-		model.addAttribute("contact",contactRepository.findOne(id));
-		return "contact/view";
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 String add=request.getParameter("add");
+		 	// delete try-catch
+			 if(add!=null){
+				 request.getRequestDispatcher("jsp/addContact.jsp").forward(request, response);
+			 }else{ 
+				 //get contact id from request parameter, and populate model with the contact and address objects. 
+				 long id=Long.parseLong(request.getParameter("id"));
+				 Contact contact=contactRepository.find(id);
+				 
+				 //we do not need to getAddress at all!!
+
+				 request.setAttribute("contact", contact);
+				 		 
+			
+				 //dispatch either to the edit page or to the view page
+				 if(request.getParameter("edit")!=null){
+					 request.getRequestDispatcher("jsp/editContact.jsp").forward(request, response);
+				 }else{
+				  request.getRequestDispatcher("jsp/viewContact.jsp").forward(request, response);
+				 } 
+			 }
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
