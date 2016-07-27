@@ -7,12 +7,9 @@ import org.joey.contacts.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.mysql.fabric.Response;
 
 /**
  * Servlet implementation class ContactServelet
@@ -25,7 +22,7 @@ public class ContactController {
     
 	@RequestMapping(value="/contacts",method=RequestMethod.GET)
 	public String getContactList(Model model){
-		model.addAttribute(contactRepository.findAll());
+		model.addAttribute("contacts",contactRepository.findAll());
 		return "contact/list";
 	}
 	
@@ -40,7 +37,7 @@ public class ContactController {
 		return "contact/edit";
 	}
 	
-	@RequestMapping(value="/contact",method=RequestMethod.GET)
+	@RequestMapping(value="/contact",params="id",method=RequestMethod.GET)
 	public String getViewContact(@RequestParam long id, Model model){
 		model.addAttribute("contact",contactRepository.findOne(id));
 		return "contact/view";
@@ -68,6 +65,7 @@ public class ContactController {
 		address.setState(state);
 		address.setZip(zip);
 		contact.setName(name);
+		
 		contactRepository.save(contact);
 		return "redirect:contact?id="+contact.getId();
 		
@@ -77,10 +75,6 @@ public class ContactController {
 	public String postDeleteContact(@RequestParam long id){
 		Contact contact=contactRepository.findOne(id);
 		contactRepository.delete(contact);
-		return "redirect:contacts";
-		
+		return "redirect:contacts";	
 	}
-	
-
-
 }
