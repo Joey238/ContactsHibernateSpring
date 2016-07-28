@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+		  <!-- post-processors for all standard config annotations -->
+    <context:component-scan base-package="org.joey.contacts" />
+		
+	
+	<!-- <jee:jndi-lookup id="contactsDataSource" jndi-name="java:/comp/env/jdbc/contactsdb"
+		 expected-type="javax.sql.DataSource">
+	</jee:jndi-lookup>
+	 -->
+	
+		  <!-- Simple implementation of the JNDI DataSource interface -->
+	<bean id="contactsDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    	<property name="jndiName" value="java:comp/env/jdbc/contactsdb"/>
+	</bean>
+	
+	
+	
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="contactsDataSource"/>
+		<!-- JpaVendorAdapter implementation for Hibernate EntityManager.
+           Exposes Hibernate's persistence provider and EntityManager extension interface -->
+     	 <property name="packagesToScan" value="org.joey.contacts.entities" />
+     	 <property name="jpaVendorAdapter">
+        	 <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+				<property name="generateDdl" value="true"/>
+				<property name="showSql" value="true" />
+          </bean>
+      </property>
+      <property name="jpaProperties">
+      	<props>
+      		<prop key="hibernate.hbm2ddl.auto">update</prop>
+		   	<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+      	</props>
+      </property>
+	</bean>
+	
+	<jpa:repositories base-package="org.joey.contacts.repositories"></jpa:repositories>
+	
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+		   <!-- responsible for registering the necessary Spring components that power annotation-driven transaction management; 
+        such as when @Transactional methods are invoked -->
+	<tx:annotation-driven />
+	
+</beans>
