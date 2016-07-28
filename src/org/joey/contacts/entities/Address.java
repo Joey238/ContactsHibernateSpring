@@ -8,10 +8,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="address")
-public class Address {
-	@Id
-	@GeneratedValue
-	private long id;
+public class Address extends BaseEntity{
+
 	@Column
 	private String street;  
 	@Column
@@ -31,12 +29,7 @@ public class Address {
 		this.state = state;
 		this.zip = zip;
 	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
+
 	public String getStreet() {
 		return street;
 	}

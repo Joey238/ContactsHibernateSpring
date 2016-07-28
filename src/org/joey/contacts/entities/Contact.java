@@ -15,11 +15,9 @@ import javax.persistence.Table;
 		//The @PrimaryKeyJoinColumn and @PrimaryKeyJoinColumns annotations
 		//define the primary key(s) of the joined subclass table:	
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Contact {
+public class Contact  extends BaseEntity{
 	
-	@Id
-	@GeneratedValue
-	private long id;
+
 	@Column
 	private String name;
 
@@ -31,12 +29,6 @@ public class Contact {
 		this.name = name;
 	}
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}
@@ -44,9 +36,5 @@ public class Contact {
 		this.name = name;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-	
 	
 }
