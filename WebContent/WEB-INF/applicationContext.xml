@@ -17,17 +17,16 @@
     <context:component-scan base-package="org.joey.contacts" />
 		
 	
-	<!-- <jee:jndi-lookup id="contactsDataSource" jndi-name="java:/comp/env/jdbc/contactsdb"
+	<jee:jndi-lookup id="contactsDataSource" jndi-name="java:/comp/env/jdbc/contactsdb2"
 		 expected-type="javax.sql.DataSource">
 	</jee:jndi-lookup>
-	 -->
+	
 	
 		  <!-- Simple implementation of the JNDI DataSource interface -->
-	<bean id="contactsDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
-    	<property name="jndiName" value="java:comp/env/jdbc/contactsdb"/>
+<!-- 	<bean id="contactsDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    	<property name="jndiName" value="java:comp/env/jdbc/contactsdb2"/>
 	</bean>
-	
-	
+	 -->
 	
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="contactsDataSource"/>
@@ -36,13 +35,14 @@
      	 <property name="packagesToScan" value="org.joey.contacts.entities" />
      	 <property name="jpaVendorAdapter">
         	 <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
-				<property name="generateDdl" value="true"/>
+		<!-- 		<property name="generateDdl" value="true"/> -->
 				<property name="showSql" value="true" />
           </bean>
       </property>
       <property name="jpaProperties">
       	<props>
-      		<prop key="hibernate.hbm2ddl.auto">update</prop>
+      		<!-- when database no table we should set create, if we set create-drop, it will drop the all tables automatically, if we set crate-update, it will have bug, cause it will choose update , but we have not tables yet. -->
+      		<prop key="hibernate.hbm2ddl.auto">create</prop>
 		   	<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
       	</props>
       </property>

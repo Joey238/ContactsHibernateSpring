@@ -18,16 +18,12 @@ public class Contact {
 	@Column
 	private String name;
 
-	 //private long addressId;
-	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	private Address address;
 	
 	public Contact(){}
 	
-	public Contact(String name, Address address) {
+	public Contact(String name) {
 		super();
 		this.name = name;
-		this.address=address;
 	}
 	
 	public Long getId() {
@@ -41,14 +37,6 @@ public class Contact {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 
 	public void setId(long id) {

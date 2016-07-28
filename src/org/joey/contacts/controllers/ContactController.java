@@ -1,6 +1,7 @@
 package org.joey.contacts.controllers;
 
 
+
 import org.joey.contacts.entities.Address;
 import org.joey.contacts.entities.Contact;
 import org.joey.contacts.repositories.ContactRepository;
@@ -48,7 +49,7 @@ public class ContactController {
 	public String postAddContact(@RequestParam String name,@RequestParam String street,  @RequestParam String city, @RequestParam String state, @RequestParam String zip){
 			//create new contact and address from for parameters, and persist
 			Address address=new Address(street,city,state,zip);
-			Contact contact=new Contact(name,address);
+			Contact contact=null;//new Contact(name,address);
 			contact=contactRepository.save(contact);
 			
 			//redirect to contact view page
@@ -59,7 +60,7 @@ public class ContactController {
 	public String postEditonContact(@RequestParam long id, @RequestParam String name,@RequestParam String street,  @RequestParam String city, @RequestParam String state, @RequestParam String zip){
 			//lookingup existing contact and address, edit field and persist
 		Contact contact=contactRepository.findOne(id);
-		Address address=contact.getAddress();
+		Address address=null;//contact.getAddress();
 		address.setStreet(street);
 		address.setCity(city);
 		address.setState(state);
