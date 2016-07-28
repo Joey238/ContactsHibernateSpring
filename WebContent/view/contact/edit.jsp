@@ -1,11 +1,13 @@
+
  <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
 <title>edit Contact</title>
 </head>
 <body>
 <h1>edit contact</h1>
-	<form action="contact" method="post">
+	<form action="contact?edit" method="post">
 	<input type="hidden" name="edit"/>
 	<input type="hidden" name="id" value="${contact.id}"/>
 		<ul>
