@@ -8,9 +8,10 @@
 <h1>Contacts</h1>
 	<ul>
 	<c:forEach var="contact" items="${contacts}">
-		<li><a href="contact?id=${contact.id}">${contact.id}. ${contact.name}</a></li>
+			<!-- what 's kind of contact it is ? person? or company?-->
+		<li><a href="person?id=${contact.id}">${contact.id}. ${contact.name}</a></li><!-- Fixme: url -->
 	</c:forEach>
 	</ul>
-	<a href="contact?add">add a new contact</a>
+	<a href="person?add">add a new contact</a>
 </body>
 </html> 

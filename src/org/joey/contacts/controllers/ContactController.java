@@ -27,7 +27,7 @@ public class ContactController {
 		return "contact/list";
 	}
 	
-	@RequestMapping(value="/contact",params="add", method=RequestMethod.GET)
+/*	@RequestMapping(value="/contact",params="add", method=RequestMethod.GET)
 	public String getAddContact(){
 		return "contact/add";
 	}
@@ -76,5 +76,5 @@ public class ContactController {
 	public String postDeleteContact(@RequestParam long id){
 		contactRepository.delete(id);
 		return "redirect:contacts";	
-	}
+	}*/
 }
