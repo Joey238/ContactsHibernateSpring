@@ -4,6 +4,7 @@ package org.joey.contacts.controllers;
 
 import org.joey.contacts.entities.Address;
 import org.joey.contacts.entities.Contact;
+import org.joey.contacts.repositories.CompanyRepository;
 import org.joey.contacts.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class ContactController {
 
 	@Autowired
     private ContactRepository contactRepository;   
+	
+	@Autowired
+	private CompanyRepository companyRepository;
     
 	@RequestMapping(value="/contacts",method=RequestMethod.GET)
 	public String getContactList(Model model){
@@ -27,54 +31,4 @@ public class ContactController {
 		return "contact/list";
 	}
 	
-/*	@RequestMapping(value="/contact",params="add", method=RequestMethod.GET)
-	public String getAddContact(){
-		return "contact/add";
-	}
-	
-	@RequestMapping(value="/contact",params="edit", method=RequestMethod.GET)
-	public String getEditContact(@RequestParam("edit") long id,Model model){
-		model.addAttribute("contact",contactRepository.findOne(id));
-		return "contact/edit";
-	}
-	
-	@RequestMapping(value="/contact",params="id",method=RequestMethod.GET)
-	public String getViewContact(@RequestParam long id, Model model){
-		model.addAttribute("contact",contactRepository.findOne(id));
-		return "contact/view";
-		
-	}
-
-	@RequestMapping(value="/contact",params="add",method=RequestMethod.POST)
-	public String postAddContact(@RequestParam String name,@RequestParam String street,  @RequestParam String city, @RequestParam String state, @RequestParam String zip){
-			//create new contact and address from for parameters, and persist
-			Address address=new Address(street,city,state,zip);
-			Contact contact=null;//new Contact(name,address);
-			contact=contactRepository.save(contact);
-			
-			//redirect to contact view page
-			return "redirect:contact?id="+contact.getId();
-	}	
-	
-	@RequestMapping(value="/contact",params="edit",method=RequestMethod.POST)
-	public String postEditonContact(@RequestParam long id, @RequestParam String name,@RequestParam String street,  @RequestParam String city, @RequestParam String state, @RequestParam String zip){
-			//lookingup existing contact and address, edit field and persist
-		Contact contact=contactRepository.findOne(id);
-		Address address=null;//contact.getAddress();
-		address.setStreet(street);
-		address.setCity(city);
-		address.setState(state);
-		address.setZip(zip);
-		contact.setName(name);
-		
-		contactRepository.save(contact);
-		return "redirect:contact?id="+contact.getId();
-		
-	}
-	
-	@RequestMapping(value="/contact",params="delete",method=RequestMethod.POST)
-	public String postDeleteContact(@RequestParam long id){
-		contactRepository.delete(id);
-		return "redirect:contacts";	
-	}*/
 }

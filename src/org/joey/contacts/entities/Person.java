@@ -24,5 +24,11 @@ public class Person extends Contact{
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	@Override
+	public String getUrl() {
+		return "person?id="+this.getId();
+	}
+	
 	
 }

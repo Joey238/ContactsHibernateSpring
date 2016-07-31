@@ -15,7 +15,7 @@ import javax.persistence.Table;
 		//The @PrimaryKeyJoinColumn and @PrimaryKeyJoinColumns annotations
 		//define the primary key(s) of the joined subclass table:	
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Contact  extends BaseEntity{
+public abstract class Contact  extends BaseEntity{
 	
 
 	@Column
@@ -36,5 +36,6 @@ public class Contact  extends BaseEntity{
 		this.name = name;
 	}
 
+	public abstract String getUrl();
 	
 }
