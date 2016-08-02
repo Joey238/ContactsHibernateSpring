@@ -2,8 +2,7 @@ package org.joey.contacts.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,7 +15,11 @@ public class Office extends BaseEntity{
 	
 	@OneToOne
 	private Address address;
-
+	
+	//it only side relationship now between company-office , many offices may have the same company
+	@ManyToOne
+	private Company company;
+	
 	public Office(){}
 	
 	public Office(Address address ){
