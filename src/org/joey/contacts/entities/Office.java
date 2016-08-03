@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="office")
-public class Office extends BaseEntity{
+public class Office extends UrlEntity{
 
 	@Column
 	private String name;
@@ -24,8 +24,9 @@ public class Office extends BaseEntity{
 	
 	public Office(){}
 	
-	public Office(Address address ){
-		this.address=address;	
+	public Office(Address address,Company company ){
+		this.address=address;
+		this.company=company;
 	}
 
 	public Address getAddress() {

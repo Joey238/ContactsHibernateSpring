@@ -16,7 +16,7 @@ import javax.persistence.Table;
 		//define the primary key(s) of the joined subclass table:	
 /** Contact class is abstract but it is our root entity and inheritance starts from here, hence it needs to be annotated with @Inheritance*/
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Contact extends BaseEntity{
+public abstract class Contact extends UrlEntity{
 	
 
 	@Column
@@ -36,7 +36,5 @@ public abstract class Contact extends BaseEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public abstract String getUrl();
 	
 }
