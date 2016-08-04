@@ -7,13 +7,13 @@
 </head>
 <body>
 <h1>edit company</h1>
-	<form action="company?edit" method="post">
-	<input type="hidden" name="edit"/>
-	<input type="hidden" name="id" value="${company.id}"/>
-		<ul>
-			<li>name: <input type="text" name="name" value="${company.name}"/></li>
-		</ul>
-	<input type="submit" value="edit"/>
+	<form action="company" method="post">
+		<input type="hidden" name="edit"/>
+		<input type="hidden" name="id" value="${company.id}"/>
+			<ul>
+				<li>name: <input type="text" name="name" value="${company.name}"/></li>
+			</ul>
+		<input type="submit" value="edit"/>
 	</form>
 	<form action="company" method="post">
 		<input type="hidden" name="delete"/>

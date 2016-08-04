@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>add company</h1>
-	<form action="company?add" method="post">
+	<form action="company" method="post">
 		<input type="hidden" name="add"/>
 		<ul>
 			<li>name: <input type="text" name="name"/></li>

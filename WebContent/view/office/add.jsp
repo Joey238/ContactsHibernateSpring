@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>add office</h1>
-	<form action="office?add" method="post">
+	<form action="office" method="post">
 		<input type="hidden" name="add"/>
 		<input type="hidden" name="company_id" value="${company.id}"/>
 		<ul>

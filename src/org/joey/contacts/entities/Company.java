@@ -3,6 +3,7 @@ package org.joey.contacts.entities;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
@@ -25,7 +26,8 @@ public class Company extends Contact{
 	 *  varchar (255), address_id bigint, company_id bigint, primary key (id))) 
 	 * **/	
 	
-	@OneToMany(mappedBy="company")
+	//
+	@OneToMany(mappedBy="company",fetch=FetchType.EAGER) 
 	private Set<Office> offices;
 	
 	

@@ -26,7 +26,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value="/company",params="edit", method=RequestMethod.GET)
-	public String getEditCompany(@RequestParam("edit") long id,Model model){
+	public String getEditCompany(@RequestParam long id,Model model){
 		model.addAttribute("company",companyRepository.findOne(id));
 		return "company/edit";
 	}

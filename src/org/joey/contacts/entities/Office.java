@@ -1,5 +1,6 @@
 package org.joey.contacts.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,7 +15,7 @@ public class Office extends UrlEntity{
 	@Column
 	private String name;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL) //Try to save new office and new address at the same time.
 	private Address address;
 	
 	//it only side relationship now between company-office , many offices may have the same company
@@ -24,7 +25,8 @@ public class Office extends UrlEntity{
 	
 	public Office(){}
 	
-	public Office(Address address,Company company ){
+	public Office(String name, Address address,Company company ){
+		this.name=name;
 		this.address=address;
 		this.company=company;
 	}
@@ -43,6 +45,14 @@ public class Office extends UrlEntity{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 	
 	
