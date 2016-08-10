@@ -3,6 +3,7 @@ package org.joey.contacts.controllers;
 import org.joey.contacts.entities.Company;
 import org.joey.contacts.entities.Person;
 import org.joey.contacts.repositories.CompanyRepository;
+import org.joey.contacts.repositories.OfficeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class CompanyController {
 
 	@Autowired
     private CompanyRepository companyRepository;   
+	
+	@Autowired
+	private OfficeRepository officeRepository;
 
 	
 	@RequestMapping(value="/company",params="add", method=RequestMethod.GET)
@@ -26,14 +30,14 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value="/company",params="edit", method=RequestMethod.GET)
-	public String getEditCompany(@RequestParam long id,Model model){
+	public String getEditCompany(@RequestParam long id, Model model){
 		model.addAttribute("company",companyRepository.findOne(id));
 		return "company/edit";
 	}
 	
-	@RequestMapping(value="/company",params="id",method=RequestMethod.GET)
+	@RequestMapping(value="/company",method=RequestMethod.GET)
 	public String getViewCompany(@RequestParam long id, Model model){
-		model.addAttribute("company",companyRepository.findOne(id));
+				model.addAttribute("company",companyRepository.findOne(id));
 		return "company/view";
 		
 	}
@@ -60,7 +64,8 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value="/company",params="delete",method=RequestMethod.POST)
-	public String postDeletePerson(@RequestParam long id){
+	public String postDeleteCompany(@RequestParam long id){
+		officeRepository.delete(companyRepository.findOne(id).getOffices());
 		companyRepository.delete(id);
 		return "redirect:contacts";	
 	}

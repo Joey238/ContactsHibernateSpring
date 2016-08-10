@@ -73,7 +73,6 @@ public class OfficeController {
 		
 		officeRepository.save(office);
 		return "redirect:office?id="+office.getId();
-		
 	}
 	
 	@RequestMapping(value="/office",params="delete",method=RequestMethod.POST)
