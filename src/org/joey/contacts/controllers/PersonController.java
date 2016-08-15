@@ -4,9 +4,11 @@ package org.joey.contacts.controllers;
 
 import org.joey.contacts.entities.Address;
 import org.joey.contacts.entities.Person;
+import org.joey.contacts.repositories.CompanyRepository;
 import org.joey.contacts.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +22,9 @@ public class PersonController {
 
 	@Autowired
     private PersonRepository personRepository;   
-
+	
+	@Autowired
+	private CompanyRepository companyRepository;
 	
 	@RequestMapping(value="/person",params="add", method=RequestMethod.GET)
 	public String getAddPerson(){
@@ -30,7 +34,10 @@ public class PersonController {
 	@RequestMapping(value="/person",params="edit", method=RequestMethod.GET)
 	public String getEditPerson(@RequestParam("edit") long id,Model model){
 		model.addAttribute("person",personRepository.findOne(id));
+		model.addAttribute("managers", personRepository.findAll());
+		model.addAttribute("employers",companyRepository.findAll());
 		return "person/edit";
+		//TODO 
 	}
 	
 	@RequestMapping(value="/person",params="id",method=RequestMethod.GET)
@@ -52,15 +59,20 @@ public class PersonController {
 	}	
 	
 	@RequestMapping(value="/person",params="edit",method=RequestMethod.POST)
-	public String postEditonPerson(@RequestParam long id, @RequestParam String name,@RequestParam String street,  @RequestParam String city, @RequestParam String state, @RequestParam String zip){
+	@Transactional
+	public String postEditonPerson(@RequestParam long id, @RequestParam String name,@RequestParam String street,  @RequestParam String city,
+									@RequestParam String state, @RequestParam String zip,
+									@RequestParam("manager_id") long managerId, @RequestParam("employer_id") long employerId){
 			//lookingup existing person and address, edit field and persist
 		Person person=personRepository.findOne(id);
-		Address address=person.getAddress();  
+		Address address=person.getAddress();   
 		address.setStreet(street);
 		address.setCity(city);
 		address.setState(state);
 		address.setZip(zip);
 		person.setName(name);
+		person.setManager(personRepository.findOne(managerId));
+		person.setEmployer(companyRepository.findOne(employerId));
 		
 		personRepository.save(person);
 		return "redirect:person?id="+person.getId();
