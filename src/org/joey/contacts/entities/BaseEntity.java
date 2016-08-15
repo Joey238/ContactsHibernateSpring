@@ -20,7 +20,7 @@ public abstract class BaseEntity {
 	@Id
 	@GeneratedValue
 	private long id;
-
+	
 	public long getId() {
 		return id;
 	}

@@ -17,6 +17,29 @@
 			<li>city: <input type="text" name="city" value="${address.city}"/></li>
 			<li>state: <input type="text" name="state" value="${address.state}"/></li>
 			<li>zip: <input type="text" name="zip" value="${address.zip }"/></li>		
+			<li>manager: <select name="manager_id">
+							<option value="0">(none)</option>
+								<c:forEach var="manager" items="${managers}">
+									<c:when test="${manager==person.manger}">
+										<option value="${manager.id}" selected>${manager.name}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${manager.id}">${manager.name}</option> 
+									</c:otherwise>
+								</c:forEach>
+						</select></li>
+			<li>employer: <select name="employer_id">
+					<option value="0">(none)</option>
+						<c:forEach var="manager" items="${employers}">
+							<c:when test="${employer==person.employer}">
+								<option value="${employer.id}" selected>${employer.name}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${employer.id}">${employer.name}</option> 
+							</c:otherwise>
+						</c:forEach>
+						</select></li>
+			<li>employer:...</li>
 		</ul>
 	<input type="submit" value="edit"/>
 	</form>
